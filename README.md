@@ -11,7 +11,6 @@
 </p>
 
 ## Running the website locally
-
 This facial classifier runs on Python 3.7
 
 Start off by cloning the repo:  
