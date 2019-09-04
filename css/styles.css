@@ -1,0 +1,23 @@
+#get_started {
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+#body {
+    background-image: url(../static/home_images/ai-background_62139.png);
+    background-size: cover;
+}
+#upload-button.btn {
+    outline-color: black;
+    color: white;
+    background-color: rgb(0, 110, 150);
+}
+#upload-button.btn:hover {
+    background-color: rgb(0, 110, 230);
+}
+.progress-bar{
+    background-color: rgb(0, 110, 150);
+    color: white;
+}
+.progress-title{
+    line-height: 14px
+}
