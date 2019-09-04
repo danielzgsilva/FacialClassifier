@@ -10,7 +10,7 @@
   <img src='static/home_images/Readme.JPG' alt='An example of the classifier functioning on me!' />
 </p>
 
-#### Running the website locally
+### Running the website locally
 
 This facial classifier runs on Python 3.7
 
