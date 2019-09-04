@@ -1,4 +1,4 @@
-# FacialClassification
+# Facial Classifier
 
 #### Computer Vision web app which predicts the age, gender, and race of all individuals present in an uploaded image
 -  Achieves an average 85% accuracy across all three dependent variables 
