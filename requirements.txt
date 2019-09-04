@@ -19,4 +19,4 @@ pathlib2==2.3.3
 pickleshare==0.7.5
 Pillow==5.4.1
 torch==1.2.0
-torchvision==0.4.0a0+6b959ee
+torchvision==0.4.0
