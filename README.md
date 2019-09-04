@@ -6,6 +6,7 @@
 -  Front-end styling accomplished using Bootstrap 4 
 -  CNN model trained in PyTorch
 
+
 <p align="center">Testing it out on myself!<br>
   <img src='static/home_images/Readme.JPG' alt='An example of the classifier functioning on me!' />
 </p>
@@ -25,7 +26,7 @@ Run the app with:
 The project will then serve locally on port 5555:  
 `http://localhost:5555/`
 
-## Training details
+## Model details
 The underlying Convolutional Neural Network uses a pretrained Squeeze and Excitation Network (SENet), trained on VGGFace2
 -  Cao, Qiong, et al. "Vggface2: A dataset for recognising faces across pose and age." Automatic Face & Gesture Recognition (FG 2018), 2018 13th IEEE International Conference on. IEEE, 2018.
 
