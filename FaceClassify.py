@@ -8,42 +8,32 @@ import torch
 import torch.nn as nn
 from model import *
 
-faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
-
-# Currently in testing
-class VideoCamera(object):
-    def __init__(self):
-      
-        self.video = cv2.VideoCapture(0)
-       
-    def __del__(self):
-        self.video.release()
-        cv2.destroyAllWindows()
-    
-    def get_frame(self):
-
-        success, image = self.video.read()
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
-        faces = faceCascade.detectMultiScale(
-            gray,
-            scaleFactor=1.1,
-            minNeighbors=5,
-            minSize=(30, 30)
-        )
-
-        i = 1
-        face_crop = []
-        for (x, y, w, h) in faces:
-            cv2.rectangle(image, (x, y), (x + w, y + h), (255, 0, 0), 2)
-            cv2.putText(image, 'Face ' + str(i), (x,y), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (255, 255, 255), 1)
-            face_crop.append(image[y:y+h, x:x+w])
-            i += 1
-
-        ret, jpeg = cv2.imencode('.jpg', image)
-        return jpeg.tobytes()
+faceCascade = cv2.CascadeClassifier(os.path.join(os.getcwd(), 'haarcascade_frontalface_default.xml'))
 
 class FaceClassification(object):
+
+    def generate_home():
+        file1 = 'Me.jpg'
+        face_files1 = ['me_face.jpg']
+        text1 = [['Young Adult', 'Male', 'White']]
+        confs1 = [[76.2, 95.8, 88.6]]
+     
+        file2 = '4_kids.jpg'
+        face_files2 = ['face1_4_kids.jpg', 'face2_4_kids.jpg', 'face3_4_kids.jpg', 'face4_4_kids.jpg']
+        text2 = [['Young Adult', 'Male', 'Indian'], ['Young Adult', 'Male', 'Indian'], ['Young Adult', 'Male', 'Black'], ['Teenager', 'Male', 'Indian']]
+        confs2 = [[60.9, 99.8, 64.4], [53.0, 99.8, 84.2], [84.2, 99.9, 53.0], [59.7, 99.9, 61.2]]
+
+        file3 = 'family.jpg'
+        face_files3 = ['face1_family.jpg', 'face2_family.jpg', 'face3_family.jpg', 'face4_family.jpg', 'face5_family.jpg']  
+        text3 = [['Older Adult', 'Male', 'White'], ['Young Adult', 'Female', 'White'], ['Older Adult', 'Female', 'White'], ['Middle Aged', 'Male', 'White'], ['Young Adult', 'Male', 'White']]
+        confs3 = [[77.6, 97.1, 90.3], [42.1, 85.9, 98.6], [77.4, 99.9, 92.9], [66.0, 99.9, 88.2], [48.7, 99.7, 99.1]]
+        
+        home_files = [file1, file2, file3]
+        face_files = [face_files1, face_files2, face_files3]
+        text = [text1, text2, text3]
+        confidences = [confs1, confs2, confs3]
+
+        return home_files, face_files, text, confidences
     
     def process_image(file, image_target, face_target):
         filename = str(np.random.randint(0,1000000)) + file.filename
@@ -54,11 +44,6 @@ class FaceClassification(object):
             x = 400.0 / img.shape[0]
             new_dim = (int(img.shape[1] * x), 400)
             img = cv2.resize(img, new_dim, interpolation = cv2.INTER_LANCZOS4)
-
-     #   if img.shape[0] < 400:
-      #      y = 400.0 / img.shape[1]
-       #     new_dim = (400, int(img.shape[0] * y))
-        #    img = cv2.resize(img, new_dim, interpolation = cv2.INTER_LANCZOS4)
 
         highlighted_faces = np.copy(img)
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -87,29 +72,6 @@ class FaceClassification(object):
         cv2.imwrite(image_path, highlighted_faces)
 
         return filename, face_names, num_faces
-
-    def generate_home():
-        file1 = 'Me.jpg'
-        face_files1 = ['me_face.jpg']
-        text1 = [['Young Adult', 'Male', 'White']]
-        confs1 = [[76.2, 95.8, 88.6]]
-     
-        file2 = '4_kids.jpg'
-        face_files2 = ['face1_4_kids.jpg', 'face2_4_kids.jpg', 'face3_4_kids.jpg', 'face4_4_kids.jpg']
-        text2 = [['Young Adult', 'Male', 'Indian'], ['Young Adult', 'Male', 'Indian'], ['Young Adult', 'Male', 'Black'], ['Teenager', 'Male', 'Indian']]
-        confs2 = [[60.9, 99.8, 64.4], [53.0, 99.8, 84.2], [84.2, 99.9, 53.0], [59.7, 99.9, 61.2]]
-
-        file3 = 'family.jpg'
-        face_files3 = ['face1_family.jpg', 'face2_family.jpg', 'face3_family.jpg', 'face4_family.jpg', 'face5_family.jpg']  
-        text3 = [['Older Adult', 'Male', 'White'], ['Young Adult', 'Female', 'White'], ['Older Adult', 'Female', 'White'], ['Middle Aged', 'Male', 'White'], ['Young Adult', 'Male', 'White']]
-        confs3 = [[77.6, 97.1, 90.3], [42.1, 85.9, 98.6], [77.4, 99.9, 92.9], [66.0, 99.9, 88.2], [48.7, 99.7, 99.1]]
-        
-        home_files = [file1, file2, file3]
-        face_files = [face_files1, face_files2, face_files3]
-        text = [text1, text2, text3]
-        confidences = [confs1, confs2, confs3]
-
-        return home_files, face_files, text, confidences
 
     def get_preds(age_preds, gender_preds, race_preds):
         

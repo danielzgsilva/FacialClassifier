@@ -61,8 +61,8 @@ def load_home(filename):
 
 @app.route('/upload/<filename>')
 def send_image(filename):
-#    del_thread = threading.Thread(target=delayed_delete, args=(5, os.path.join(ROOT, 'images/') + filename))
- #   del_thread.start()
+    del_thread = threading.Thread(target=delayed_delete, args=(5, os.path.join(ROOT, 'images/') + filename))
+    del_thread.start()
     return send_from_directory('images', filename)
 
 @app.route('/predictions/<facename>')
