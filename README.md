@@ -7,7 +7,7 @@
 -  CNN model trained in PyTorch
 
 <p align="center">
-  <img src='static/home_images/Readme.JPG alt='An example of the classifier functioning on me!' width="600" />
+  <img src='static/home_images/Readme.JPG' alt='An example of the classifier functioning on me!' width="600" />
 </p>
 
 #### Running the website locally
