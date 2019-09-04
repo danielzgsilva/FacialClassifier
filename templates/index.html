@@ -1,0 +1,309 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        #get_started {
+            padding-top: 25px;
+            padding-bottom: 25px;
+        }
+        #body {
+            background-image: url(../static/home_images/ai-background_62139.png);
+            background-size: cover;
+        }
+        #upload-button.btn {
+            outline-color: black;
+            color: white;
+            background-color: rgb(0, 110, 150);
+        }
+        #upload-button.btn:hover {
+            background-color: rgb(0, 110, 230);
+        }
+        .progress-bar{
+            background-color: rgb(0, 110, 150);
+            color: white;
+        }
+        .progress-title{
+            line-height: 14px
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="collapse bg-dark" id="navbarHeader">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 col-md-7 py-4">
+                        <h4 class="text-white">About</h4>
+                        <p class="text-white">
+                            I am Daniel Silva, a Computer Science and Statistics student at the University of Central Florida.
+                            I'll write more about myself later.
+                        </p>
+                    </div>
+                    <div class="col-sm-4 offset-md-1 py-4">
+                        <h4 class="text-white">Contact</h4>
+                        <ul class="list-unstyled">
+                            <li><a href="https://github.com/danielzgsilva" class="text-white">Visit my portfolio</a></li>
+                            <li><a href="https://www.linkedin.com/in/danielsilva98" class="text-white">Connect with me on LinkedIn</a></li>
+                            <li><a href="mailto:danielzgsilva@knights.ucf.edu" class="text-white">Email me</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="navbar navbar-dark bg-dark box-shadow">
+            <div class="container d-flex">
+                <a href="#" class="navbar-brand d-flex align-items-left">
+                    <strong>Daniel Silva's Facial Classifier</strong>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main role="main">
+        <div class="jumbotron jumbotron-fluid text-center" style="background-color: white" id="get_started">
+            <h1>Get Started!</h1>
+            <p class="lead">Upload a picture below and allow us to predict who you are! Don't worry, your image will not be kept.<p /> <br />
+            <form id="upload-form" action="{{ url_for('upload') }}" value="Choose Your File!" method="POST" enctype="multipart/form-data">
+                    <input id="file-picker" class="btn btn-outline-secondary" type="file" name="file" accept="image/*" single />
+                    <input type="submit" class="btn" value="Run the Classifier" id="upload-button" />
+            </form>
+        </div>
+        <div class="container-fluid text-center" id="body"><br />
+            <div class="row justify-content-center">
+                <div id="home_carousel" class="carousel slide" data-interval="false">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" id="ex0">
+                            <div class="card border-secondary mb-3 box-shadow">
+                                <div class="card-header" style="background-color: white">Classifying an image of me</div>
+                                <img src="{{url_for('load_home', filename=examples[0])}} " alt="Example of me">
+                                <div class="card-body">
+                                    <img src=" {{url_for('load_home', filename=face_files[0][0])}}" class="rounded">
+                                    <br><br>
+                                    <div class="container">
+                                        <div class="row align-self-center">
+                                            <div class="col-md-6">
+                                            <p class="progress-title" id="age">{{ text[0][0][0] }}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                            <div class="progress">
+                                                <div class="progress-bar" id="age-confidence" style="width: {{ confs[0][0][0] }}%">{{ confs[0][0][0] }}%</div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="row align-self-center">
+                                            <div class="col-md-6">
+                                            <p class="progress-title" id="gender">{{ text[0][0][1] }}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                            <div class="progress">
+                                                <div class="progress-bar" id="gender-confidence" style="width: {{ confs[0][0][1] }}%">{{ confs[0][0][1] }}%</div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="row align-self-center">
+                                            <div class="col-md-6">
+                                                <p class="progress-title" id="race">{{ text[0][0][2] }}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="progress">
+                                                <div class="progress-bar" id="race-confidence" style="width: {{ confs[0][0][2] }}%">{{ confs[0][0][2] }}%</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item" id="ex1">
+                            <div class="card border-secondary mb-3 box-shadow">
+                                <img src="{{url_for('load_home', filename=examples[1])}} " alt="Example 1"><br>
+                                <div class="row justify-content-center">
+                                    {% for face_name in face_files[1] %}
+                                        {% if loop.index == 1 %}
+                                        <div class="form-check form-check-inline" id="1">
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="1-{{ loop.index }}" value="{{ loop.index }}" onchange='pickFace(1, {{ loop.index|tojson }})' checked>
+                                            <label class="form-check-label" for="{{ loop.index }}">{{ loop.index }}</label>
+                                        </div>
+                                        {% else %}
+                                        <div class="form-check form-check-inline" id="1">
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="1-{{ loop.index }}" value="{{ loop.index }}" onchange='pickFace(1, {{ loop.index|tojson }})'>
+                                            <label class="form-check-label" for="{{ loop.index }}">{{ loop.index }}</label>
+                                        </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <div class="card-body">
+                                    <img src=" {{url_for('load_home', filename=face_files[1][0])}}" id="face1" class="rounded">
+                                    <br><br>
+                                    <div class="container">
+                                        <div class="row align-self-center">
+                                            <div class="col-md-6">
+                                            <p class="progress-title" id="age1">{{ text[1][0][0] }}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                            <div class="progress">
+                                                <div class="progress-bar" id="age-confidence1" style="width: {{ confs[1][0][0] }}%">{{ confs[1][0][0] }}%</div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="row align-self-center">
+                                            <div class="col-md-6">
+                                            <p class="progress-title" id="gender1">{{ text[1][0][1] }}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                            <div class="progress">
+                                                <div class="progress-bar" id="gender-confidence1" style="width: {{ confs[1][0][1] }}%">{{ confs[1][0][1] }}%</div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="row align-self-center">
+                                            <div class="col-md-6">
+                                                <p class="progress-title" id="race1">{{ text[1][0][2] }}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="progress">
+                                                <div class="progress-bar" id="race-confidence1" style="width: {{ confs[1][0][2] }}%">{{ confs[1][0][2] }}%</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item" id="ex2">
+                            <div class="card border-secondary mb-3 box-shadow">
+                                <img src="{{url_for('load_home', filename=examples[2])}} " alt="Example 2"><br>
+                                <div class="row justify-content-center">
+                                    {% for face_name in face_files[2] %}
+                                        {% if loop.index == 1 %}
+                                        <div class="form-check form-check-inline" id="2">
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="2-{{ loop.index }}" value="{{ loop.index }}" onchange='pickFace(2, {{ loop.index|tojson }})' checked>
+                                            <label class="form-check-label" for="{{ loop.index }}">{{ loop.index }}</label>
+                                        </div>
+                                        {% else %}
+                                        <div class="form-check form-check-inline" id="2">
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="2-{{ loop.index }}" value="{{ loop.index }}" onchange='pickFace(2, {{ loop.index|tojson }})'>
+                                            <label class="form-check-label" for="{{ loop.index }}">{{ loop.index }}</label>
+                                        </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <div class="card-body">
+                                    <img src=" {{url_for('load_home', filename=face_files[2][0])}}" id="face2" class="rounded">
+                                    <br><br>
+                                    <div class="container">
+                                        <div class="row align-self-center">
+                                            <div class="col-md-6">
+                                            <p class="progress-title" id="age2">{{ text[2][0][0] }}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                            <div class="progress">
+                                                <div class="progress-bar" id="age-confidence2" style="width: {{ confs[2][0][0] }}%">{{ confs[2][0][0] }}%</div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="row align-self-center">
+                                            <div class="col-md-6">
+                                            <p class="progress-title" id="gender2">{{ text[2][0][1] }}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                            <div class="progress">
+                                                <div class="progress-bar" id="gender-confidence2" style="width: {{ confs[2][0][1] }}%">{{ confs[2][0][1] }}%</div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="row align-self-center">
+                                            <div class="col-md-6">
+                                                <p class="progress-title" id="race2">{{ text[2][0][2] }}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="progress">
+                                                <div class="progress-bar" id="race-confidence2" style="width: {{ confs[2][0][2] }}%">{{ confs[2][0][2] }}%</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#home_carousel" role="button" data-slide="prev" style="color: black">
+                        <span class="carousel-control-prev-icon"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#home_carousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </main>
+
+    <footer class="text-muted">
+        <div style="background-color: white">
+            <div class="container"><br />
+                <p class="float-right">
+                    <a href="#">Back to top</a>
+                </p>
+                <p class="float-left">Daniel Silva's Facial Classifier</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+<script>
+    $("#file-picker").change(function () {
+        var input = document.getElementById('file-picker');
+        for (var i = 0; i < input.files.length; i++) {
+            var ext = input.files[i].name.substring(input.files[i].name.lastIndexOf('.') + 1).toLowerCase()
+            if ((ext == 'jpg') || (ext == 'png') || (ext == 'jpeg')) {
+                $("#msg").text("Your file is supported.")
+            }
+            else {
+                $("#msg").text("File was NOT supported. Please upload either a JPG or PNG file.")
+                document.getElementById("file-picker").value = "";
+            }
+        }
+    });
+
+    function pickFace(ex, face_num) {
+        const js_text = {{ text|tojson }};
+        const js_face_files = {{ face_files|tojson }}
+        const js_confidences = {{ confs|tojson }}
+        
+        var image = document.getElementById("face" + ex.toString());
+        var face = face_num - 1
+        
+        image.src = "{{ url_for('load_home', filename=temp) }}" + js_face_files[ex][face]
+        
+        var age = document.getElementById("age" + ex.toString());
+        var gender = document.getElementById("gender" + ex.toString());
+        var race = document.getElementById("race" + ex.toString());
+
+        age.innerHTML = js_text[ex][face][0]
+        gender.innerHTML = js_text[ex][face][1]
+        race.innerHTML = js_text[ex][face][2]
+
+        var age_confidence = document.getElementById("age-confidence" + ex.toString());
+        var gender_confidence = document.getElementById("gender-confidence" + ex.toString());
+        var race_confidence = document.getElementById("race-confidence" + ex.toString());
+
+        age_confidence.innerHTML = js_confidences[ex][face][0] + '%'
+        gender_confidence.innerHTML = js_confidences[ex][face][1] + '%'
+        race_confidence.innerHTML = js_confidences[ex][face][2] + '%'
+
+        age_confidence.style.width = js_confidences[ex][face][0] + '%'
+        gender_confidence.style.width = js_confidences[ex][face][1] + '%'
+        race_confidence.style.width = js_confidences[ex][face][2] + '%' 
+    }
+</script>
