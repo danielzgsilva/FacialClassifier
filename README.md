@@ -6,7 +6,7 @@
 -  Front-end styling accomplished using Bootstrap 4 
 -  CNN model trained in PyTorch
 
-<p align="center">
+<p align="center">Testing it out on myself!
   <img src='static/home_images/Readme.JPG' alt='An example of the classifier functioning on me!' />
 </p>
 
