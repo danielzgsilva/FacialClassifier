@@ -1,6 +1,6 @@
 # Facial Classifier
 
-#### This is a computer vision web application, built to predict the age, race, and gender of all individuals present in an image
+**This is a computer vision web application, built to predict the age, race, and gender of all individuals present in an image**
 -  Achieves an average 85% accuracy across all three dependent variables 
 -  Back-end development done in Flask 
 -  Front-end styling accomplished using Bootstrap 4 
@@ -10,7 +10,7 @@
   <img src='static/home_images/Readme.JPG' alt='An example of the classifier functioning on me!' />
 </p>
 
-### Running the website locally
+## Running the website locally
 
 This facial classifier runs on Python 3.7
 
