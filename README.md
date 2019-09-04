@@ -17,7 +17,7 @@ Start off by cloning the repo:
 `git clone https://github.com/danielzgsilva`
 
 Navigate to the project's root and install dependencies like so:
-'pip install -r requirements.txt'
+`pip install -r requirements.txt`
 
 Run the app with:  
 `python app.py`
