@@ -4,10 +4,13 @@
 -  Achieves an average 85% accuracy across all three dependent variables 
 -  Back-end development done in Flask 
 -  Front-end styling accomplished using Bootstrap 4 
+-  CNN model trained in PyTorch
 
-![An example of the classifier functioning on me!](static/home_images/Readme.jpg)
+<p align="center">
+  <img src='static/home_images/Readme.JPG alt='An example of the classifier functioning on me!' width="600" />
+</p>
 
-### Running the website locally
+#### Running the website locally
 
 This facial classifier runs on Python 3.7
 
