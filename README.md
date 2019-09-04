@@ -27,14 +27,13 @@ The project will then serve locally on port 5555:
 `http://localhost:5555/`
 
 ## Training details
-
 The underlying Convolutional Neural Network uses a pretrained Squeeze and Excitation Network (SENet), trained on VGGFace2
 -  Cao, Qiong, et al. "Vggface2: A dataset for recognising faces across pose and age." Automatic Face & Gesture Recognition (FG 2018), 2018 13th IEEE International Conference on. IEEE, 2018.
 
 The model was fine tuned for classification of tightly cropped facial images using the UTKFace dataset
 - https://susanqq.github.io/UTKFace/
 
-**Work in progress:**
+## Work in progress:
 - Deploying the app through Heroku
 - Combatting learned biases due to imbalanced datasets
 - Adding the ability to take a picture through the app, rather than requiring an image upload
