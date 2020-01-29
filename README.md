@@ -2,10 +2,8 @@
 
 **This is a computer vision web application, built to predict the age, race, and gender of all individuals present in an image**
 -  Achieves an average 85% accuracy across all three dependent variables 
--  Back-end development done in Flask 
--  Front-end styling accomplished using Bootstrap 4 
--  CNN model trained in PyTorch
-
+-  CNN model build and trained in PyTorch
+-  Developed with a Flask Python backend and bootstrap frontend
 
 <p align="center">Testing it out on myself!<br>
   <img src='static/home_images/Readme.JPG' alt='An example of the classifier functioning on me!' />
