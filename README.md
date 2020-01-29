@@ -1,6 +1,6 @@
 # Facial Classifier
 
-**This is a computer vision web application, built to predict the age, race, and gender of all individuals present in an image**
+**Computer vision web application, built to predict the age, race, and gender of all individuals present in an image**
 -  Achieves an average 85% accuracy across all three dependent variables 
 -  CNN model built and trained in PyTorch
 -  Developed with a Flask Python backend and bootstrap frontend
